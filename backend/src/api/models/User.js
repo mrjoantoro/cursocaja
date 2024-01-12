@@ -19,7 +19,7 @@ const userSchema = new mongoose.Schema({
 });
 
 // Hashing password antes de guardar
-usuarioSchema.pre('save', async function (next) {
+userSchema.pre('save', async function (next) {
     if (!this.isModified('password')) return next();
 
     const salt = await bcrypt.genSalt(10);
@@ -28,7 +28,7 @@ usuarioSchema.pre('save', async function (next) {
 });
 
 // Método para verificar la contraseña
-usuarioSchema.methods.compararPassword = async function (passwordCandidato) {
+userSchema.methods.compararPassword = async function (passwordCandidato) {
     return bcrypt.compare(passwordCandidato, this.password);
 };
 
