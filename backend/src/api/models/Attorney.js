@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
+const user = require('./User');
 
-const attorneySchema = new mongoose.Schema({
+const attorneySchema = User.discriminator('Attorney', new mongoose.Schema({
     firstName: {
         type: String,
         required: true
