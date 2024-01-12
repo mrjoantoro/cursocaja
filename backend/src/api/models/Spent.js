@@ -41,7 +41,7 @@ const spentSchema = new mongoose.Schema({
     message: "El budgetStatus debe ser un presupuesto de gasto válido.",
     },
   },
-});
+}, { timestamps: true });
 
 const Spent = mongoose.model("Spent", spentSchema);
 

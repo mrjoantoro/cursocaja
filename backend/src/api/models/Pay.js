@@ -23,7 +23,7 @@ const paySchema = new mongoose.Schema({
         ref: 'Attorney',
         required: true
     }
-});
+}, { timestamps: true });
 
 const Pay = mongoose.model('Pay', paySchema);
 

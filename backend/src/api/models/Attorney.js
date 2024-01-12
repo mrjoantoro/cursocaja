@@ -11,11 +11,13 @@ const attorneySchema = new mongoose.Schema({
     },
     email: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     phone: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     relationshipWithStudent: {
         type: String,
@@ -30,7 +32,7 @@ const attorneySchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'ParentCenter'
     }]
-});
+}, { timestamps: true });
 
 const Attorney = mongoose.model('Attorney', attorneySchema);
 

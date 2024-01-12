@@ -28,7 +28,7 @@ const parentCenterSchema = new mongoose.Schema({
       ref: "Attorney",
     },
   ],
-});
+}, { timestamps: true });
 
 const ParentCenter = mongoose.model("ParentCenter", parentCenterSchema);
 

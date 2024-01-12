@@ -39,6 +39,6 @@ const shareSchema = new mongoose.Schema({
         message: "El budgetStatus debe ser un presupuesto de ingreso válido.",
         },
       },
-});
+}, { timestamps: true });
 
 module.exports = mongoose.model('Share', shareSchema);
