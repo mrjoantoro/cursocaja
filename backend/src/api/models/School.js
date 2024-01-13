@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
-import { validateRut } from "../../lib/helpers";
+const mongoose = require("mongoose");
+const { validateRut } = require("../../lib/helpers");
 
 const schoolSchema = new mongoose.Schema(
   {
@@ -22,13 +22,7 @@ const schoolSchema = new mongoose.Schema(
     region: String,
     phone: {
       type: String,
-      validate: {
-        validator: function (value) {
-          return /^\+56 \d{5} \d{4}$/.test(value);
-        },
-        message:
-          "Invalid phone number format. Please use the format +56 22222 1111.",
-      },
+      required: false,
       default: "",
     },
     email: {
@@ -37,13 +31,38 @@ const schoolSchema = new mongoose.Schema(
         validator: function (value) {
           return /\S+@\S+\.\S+/.test(value);
         },
-        message:
-          "Invalid email format. Please use a valid email format.",
+        message: "Invalid email format. Please use a valid email format.",
       },
-      default: "",
+      required: true,
+    },
+    website: {
+      type: String,
+      required: true,
+      unique: true,
+      default: function () {
+        return "www." + this.email.split("@")[1];
+      },
+    },
+    subdomain: {
+      type: String,
+      required: true,
+      unique: true,
+      default: function () {
+        const domain = this.email.split("@")[1];
+        return domain.substring(0, domain.lastIndexOf("."));
+      },
+    },
+    tenant: {
+      type: String,
+      default: function () {
+        const subdomain = this.subdomain;
+        return subdomain;
+      },
     },
   },
   { timestamps: true }
 );
 
-export default mongoose.model("School", schoolSchema);
+const School = mongoose.model("Student", schoolSchema);
+
+module.exports = School;

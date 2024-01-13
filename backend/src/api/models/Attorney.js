@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const User = require('./User');
 
-const attorneySchema = User.discriminator('Attorney', new mongoose.Schema({
+const attorneySchema = new mongoose.Schema({
     firstName: {
         type: String,
         required: true
@@ -23,6 +23,11 @@ const attorneySchema = User.discriminator('Attorney', new mongoose.Schema({
     relationshipWithStudent: {
         type: String,
         enum: ['Padre', 'Madre', 'Abuelo', 'Abuela'],
+        required: true
+    },
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
         required: true
     },
     students: [{

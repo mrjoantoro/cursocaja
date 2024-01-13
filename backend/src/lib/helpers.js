@@ -5,21 +5,24 @@ const hashPassword = async (password) => {
   return bcrypt.hash(password, salt);
 };
 
-const validateRut = async (value) => {
-  const cleanedValue = value.replace(/\D/g, "");
-  const length = cleanedValue.length;
-  let sum = 0;
-  let weight = 2;
+const validateRut = async (rut) => {
+  const rutLimpio = rut.replace(/[\.\-]/g, '');
+  const cuerpo = rutLimpio.slice(0, -1);
+  let dv = rutLimpio.slice(-1).toUpperCase();
 
-  for (let i = length - 1; i >= 0; i--) {
-    sum += parseInt(cleanedValue.charAt(i)) * weight;
-    weight = weight % 7 === 0 ? 2 : weight + 1;
+  let suma = 0;
+  let multiplo = 2;
+
+  for (let i = cuerpo.length - 1; i >= 0; i--) {
+      suma += multiplo * cuerpo.charAt(i);
+      multiplo = multiplo === 7 ? 2 : multiplo + 1;
   }
 
-  const remainder = sum % 11;
-  const checkDigit = remainder < 2 ? 0 : 11 - remainder;
+  const dvCalculado = 11 - (suma % 11);
 
-  return checkDigit === parseInt(cleanedValue.charAt(length - 1));
+  let dvEsperado = dvCalculado === 11 ? '0' : dvCalculado === 10 ? 'K' : String(dvCalculado);
+
+  return dv === dvEsperado;
 };
 
 module.exports = {

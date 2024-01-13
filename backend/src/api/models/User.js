@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema({
     },
     rol: {
         type: String,
-        enum: ['Administrador', 'IntegranteCP', 'Apoderado'],
+        enum: ['SuperAdmin', 'AdminCurso', 'IntegranteCP', 'Apoderado'],
         required: true
     },
 });
